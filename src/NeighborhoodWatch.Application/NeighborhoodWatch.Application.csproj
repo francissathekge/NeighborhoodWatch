@@ -14,4 +14,7 @@
   <ItemGroup>
     <ProjectReference Include="..\NeighborhoodWatch.Core\NeighborhoodWatch.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Services\AddressService\Mapping\" />
+  </ItemGroup>
 </Project>

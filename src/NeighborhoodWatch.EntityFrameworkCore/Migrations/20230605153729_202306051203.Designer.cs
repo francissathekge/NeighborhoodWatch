@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using NeighborhoodWatch.EntityFrameworkCore;
 
@@ -11,9 +12,10 @@ using NeighborhoodWatch.EntityFrameworkCore;
 namespace NeighborhoodWatch.Migrations
 {
     [DbContext(typeof(NeighborhoodWatchDbContext))]
-    partial class NeighborhoodWatchDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230605153729_202306051203")]
+    partial class _202306051203
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -1671,7 +1673,7 @@ namespace NeighborhoodWatch.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Addresses");
+                    b.ToTable("Address");
                 });
 
             modelBuilder.Entity("NeighborhoodWatch.MultiTenancy.Tenant", b =>
