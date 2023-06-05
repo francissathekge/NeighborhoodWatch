@@ -1,6 +1,7 @@
 ﻿using Abp.Application.Services.Dto;
 using Abp.AutoMapper;
 using MovieListAbpApp.Domain;
+using NeighborhoodWatch.Services.AddressService.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,19 +44,10 @@ namespace MovieListAbpApp.Services.PersonService.Dtos
         /// <summary>
         ///
         /// </summary>
-        public AddressInputDto Address { get; set; }
+        public AddressDto Address { get; set; }
         /// <summary>
         ///
         /// </summary>
         public string[] RoleNames { get; set; }
-    }
-
-    public class AddressInputDto
-    {
-        public string Street { get; set; }
-        public string Town { get; set; }
-        public string City { get; set; }
-        public string Province { get; set; }
-        public string PostalCode { get; set; }
     }
 }

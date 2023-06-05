@@ -19,6 +19,5 @@ namespace NeighborhoodWatch.Services.AddressService.Dtos
         public string City { get; set; }
         public string Province { get; set; }
         public string PostalCode { get; set; }
-        public Guid PersonId { get; set; }
     }
 }

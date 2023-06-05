@@ -3,6 +3,7 @@ using MovieListAbpApp.Domain;
 using MovieListAbpApp.Services.PersonService.Dtos;
 using NeighborhoodWatch.Authorization.Users;
 using NeighborhoodWatch.Domain;
+using NeighborhoodWatch.Services.AddressService.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,7 +18,10 @@ namespace MovieListAbpApp.Services.PersonService.Mapping
         {
             CreateMap<Person, PersonDto>()
                 .ForMember(x => x.userId, m => m.MapFrom(x => x.User != null ? x.User.Id : (long?)null))
-                .ForMember(x => x.Address, m => m.MapFrom(x => x.Address != null ? x.Address.Id : (Guid?)null));
+                .ForMember(x => x.Address, m => m.MapFrom(x => x.Address != null ? x.Address.Id : (Guid?)null))
+                .ForMember(x => x.Address, m => m.MapFrom(x => x.Address)); // Map Address to AddressDto
+
+            CreateMap<Address, AddressDto>(); // Map Address to AddressDto
 
             CreateMap<PersonDto, User>()
                 .ForMember(x => x.Name, m => m.MapFrom(x => x.Name))
