@@ -18,7 +18,5 @@ namespace NeighborhoodWatch.Domain
         public virtual DateTime EndTime { get; set; }
         public Address Address { get; set; }
         public Person Person { get; set; }
-        [NotMapped]
-        public IFormFile File { get; set; }
     }
 }

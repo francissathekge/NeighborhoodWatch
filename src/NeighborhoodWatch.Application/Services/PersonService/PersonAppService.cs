@@ -47,13 +47,13 @@ namespace MovieListAbpApp.Services.PersonService
         [HttpGet]
         public async Task<List<PersonDto>> GetAllAsync()
         {
-            var query = _PersonRepository.GetAllIncluding(m => m.User).ToList();
+            var query = _PersonRepository.GetAllIncluding(m => m.User,mbox=> mbox.Address).ToList();
             return ObjectMapper.Map<List<PersonDto>>(query);
         }
         [HttpGet]
         public async Task<PersonDto> GetAsync(Guid id)
         {
-            var query = _PersonRepository.GetAllIncluding(m => m.User).FirstOrDefault(x => x.Id == id);
+            var query = _PersonRepository.GetAllIncluding(m => m.User, mbox => mbox.Address).FirstOrDefault(x => x.Id == id);
             return ObjectMapper.Map<PersonDto>(query);
         }
         [HttpPut]

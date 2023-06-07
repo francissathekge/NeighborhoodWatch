@@ -17,3 +17,4 @@ namespace NeighborhoodWatch.Domain
         public virtual string FileType { get; set; }
     }
 }
+ 
