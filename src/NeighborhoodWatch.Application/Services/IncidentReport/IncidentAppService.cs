@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace NeighborhoodWatch.Services.IncidentReport
 {
@@ -22,36 +23,52 @@ namespace NeighborhoodWatch.Services.IncidentReport
         private readonly IRepository<Incident, Guid> _incidentRepository;
         private readonly IRepository<Person, Guid> _personRepository;
         private readonly IRepository<Address, Guid> _addressRepository;
+        private readonly IRepository<StoredFile, Guid> _storedFileRepository;
+ 
+
 
         public IncidentAppService(
             IRepository<Incident, Guid> incidentRepository,
             IRepository<Person, Guid> personRepository,
-            IRepository<Address, Guid> addressRepository)
+            IRepository<Address, Guid> addressRepository,
+            IRepository<StoredFile, Guid> StoredFileRepository)
         {
             _incidentRepository = incidentRepository;
             _personRepository = personRepository;
             _addressRepository = addressRepository;
+            _storedFileRepository = StoredFileRepository;
         }
         [HttpPost]
         [Consumes("multipart/form-data")]
-        public async Task<IncidentDto> CreateAsync([FromForm]IncidentDto incident)
-        { 
-            if (!Utils.IsImage(incident.Picture))
-                throw new ArgumentException("The file is not a valid image.");
+        public async Task<IncidentDto> CreateAsync([FromForm] IncidentDto incident)
+        {
+            var userId = AbpSession.UserId;
+            var person = await _personRepository.GetAllIncluding(a => a.Address).Where(a => a.User.Id == userId).FirstOrDefaultAsync();
+/*
+            var userId = AbpSession.UserId;
+            var person = await _personRepository.FirstOrDefaultAsync(a => a.User.Id == userId);*/
 
             var entity = ObjectMapper.Map<Incident>(incident);
-            entity.Person =  _personRepository.Get(incident.PersonId);
-            entity.Address =  _addressRepository.Get(incident.AddressId);
-            if (incident.Picture != null)
+            entity.Person = person;
+            entity.Address = person.Address;
+
+            if (incident.File != null && !Utils.IsImage(incident.File))
+                throw new ArgumentException("The file is not a valid image.");
+
+            if (incident.File != null)
             {
                 var storedFileService = IocManager.Instance.Resolve<StoredFileAppService>();
-                var storedFileDto = new StoredFileDto() { File = incident.Picture };
+                var storedFileDto = new StoredFileDto() { File = incident.File };
                 entity.Picture = await storedFileService.CreateStoredFile(storedFileDto);
             }
+            else
+            {
+                entity.Picture = null; // Set Picture property to null if the file is null
+            }
 
-            var createdEntity = await _incidentRepository.InsertAsync(entity);
-            return ObjectMapper.Map<IncidentDto>(createdEntity);
+            return ObjectMapper.Map<IncidentDto>(await _incidentRepository.InsertAsync(entity));
         }
+
 
         public async Task DeleteAsync(Guid id)
         {
@@ -67,8 +84,9 @@ namespace NeighborhoodWatch.Services.IncidentReport
 
         public async Task<PagedResultDto<IncidentDto>> GetAllAsync(PagedAndSortedResultRequestDto pagedAndSortedResultRequestDto)
         {
+
             var entities = _incidentRepository
-                .GetAllIncluding(m => m.Person, mbox => mbox.Address).ToList();
+                .GetAllIncluding(m => m.Person, mbox => mbox.Address, p=> p.Picture).ToList();
             var totalCount = entities.Count;
 
             var dtos = ObjectMapper.Map<List<IncidentDto>>(entities);

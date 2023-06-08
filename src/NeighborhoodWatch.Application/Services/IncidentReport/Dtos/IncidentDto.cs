@@ -13,10 +13,11 @@ namespace NeighborhoodWatch.Services.IncidentReport.Dtos
     [AutoMap(typeof(Incident))]
     public class IncidentDto : EntityDto<Guid>
     {
-        public DateTime CreatedDate { get; set; }
-        public IFormFile Picture { get; set; }
-        public Guid AddressId { get; set; }
-        public Guid PersonId { get; set; }
+
+        public IFormFile File { get; set; }
+        public Guid ?Fileid { get; set; }
+        public Guid ?AddressId { get; set; }
+        public Guid ?PersonId { get; set; }
         public string IncidentType { get; set; }
         public string Comment { get; set; }
     }

@@ -16,7 +16,7 @@ namespace NeighborhoodWatch.Services.StoredFileService
 {
     public class StoredFileAppService : ControllerBase, IStoredFileAppService
     {
-        const string BASE_FILE_PATH = "App_Data/Images";
+        const string BASE_FILE_PATH = "App_Data/Pictures";
         private readonly IRepository<StoredFile, Guid> _storedFileRepository;
         private readonly IMapper _mapper;
         public StoredFileAppService(IRepository<StoredFile, Guid> storedFileRepository, IMapper mapper)

@@ -32,7 +32,8 @@ namespace MovieListAbpApp.Services.PersonService
             _addressRepository = addressRepository;
         }
         [HttpPost]
-        public async Task<PersonDto> CreateAsync(PersonDto input)
+        [Consumes("multipart/form-data")]
+        public async Task<PersonDto> CreateAsync([FromForm] PersonDto input)
         {
             var address = ObjectMapper.Map<Address>(input.Address);
 

@@ -2,6 +2,8 @@
 using Abp.Application.Services.Dto;
 using Abp.Domain.Repositories;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MovieListAbpApp.Domain;
 using NeighborhoodWatch.Domain;
 using NeighborhoodWatch.Services.PatrollingRequestService.Dtos;
@@ -25,14 +27,21 @@ namespace NeighborhoodWatch.Services.PatrollingRequestService
             _PersonRepository = personRepository;
             _addressRepository = addressRepository;
         }
-
-        public async Task<PatrollingRequestDto> CreateAsync(PatrollingRequestDto patrollingRequest)
+        [HttpPost]
+        [Consumes("multipart/form-data")]
+        public async Task<PatrollingRequestDto> CreateAsync([FromForm] PatrollingRequestDto patrollingRequest)
         {
+            var userId = AbpSession.UserId;
+            var person = await _PersonRepository.GetAllIncluding(a => a.Address).Where(a => a.User.Id == userId).FirstOrDefaultAsync();
+
             var entity = ObjectMapper.Map<PatrollingRequest>(patrollingRequest);
-            entity.Person = _PersonRepository.Get(patrollingRequest.PersonId);
-            entity.Address=_addressRepository.Get(patrollingRequest.AddressId);
-           
-            
+            entity.Person = person;
+            entity.Address = person.Address;
+            /*          var entity = ObjectMapper.Map<PatrollingRequest>(patrollingRequest);
+                      entity.Person = _PersonRepository.Get(patrollingRequest.PersonId);
+                      entity.Address=_addressRepository.Get(patrollingRequest.AddressId);*/
+
+
             return ObjectMapper.Map<PatrollingRequestDto>(await _patrollingRequestRepository.InsertAsync(entity));
         }
 

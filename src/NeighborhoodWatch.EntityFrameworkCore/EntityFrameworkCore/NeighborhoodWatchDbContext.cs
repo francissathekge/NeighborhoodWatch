@@ -15,7 +15,9 @@ namespace NeighborhoodWatch.EntityFrameworkCore
         public DbSet<Person> Persons { get; set; }
         public DbSet<Address> Addresses { get; set; }
         public DbSet<PatrollingRequest> PatrollingRequests { get; set; }
-        public DbSet<Incident> Incidents{ get; set; }
+        public DbSet<Incident> Incidents { get; set; }
+        public DbSet<StoredFile> StoredFiles { get; set; }
+        public DbSet<Forum> Forums { get; set; }
 
 
         public NeighborhoodWatchDbContext(DbContextOptions<NeighborhoodWatchDbContext> options)

@@ -19,19 +19,20 @@ namespace NeighborhoodWatch.Services.IncidentReport.Mapping
        public IncidentMappingProfile()
         {
             CreateMap<Incident, IncidentDto>()
-               .ForMember(x => x.PersonId, m => m.MapFrom(x => x.Person != null ? x.Person.Id : (Guid?)null))
-               .ForMember(x => x.AddressId, m => m.MapFrom(x => x.Address != null ? x.Address.Id : (Guid?)null))
-               .ForMember(x => x.Picture, m => m.Ignore());
+                .ForMember(x => x.PersonId, m => m.MapFrom(x => x.Person != null ? x.Person.Id : (Guid?)null))
+               .ForMember(x => x.Fileid, m => m.MapFrom(x => x.Picture != null ? x.Picture.Id : (Guid?)null))
+               .ForMember(x => x.AddressId, m => m.MapFrom(x => x.Address != null ? x.Address.Id : (Guid?)null));
+            /* .ForMember(x => x.Picture, m => m.Ignore());*/
 
-            CreateMap<IncidentDto, Incident>()
-                .ForMember(e => e.Person, d => d.MapFrom(x => GetEntity<Person>(x.PersonId)));
+            /*            CreateMap<IncidentDto, Incident>()
+                            .ForMember(e => e.Person, d => d.MapFrom(x => GetEntity<Person>(x.PersonId)));*/
         }
-        private T GetEntity<T>(Guid id) where T : AuditedEntity<Guid>
+/*        private T GetEntity<T>(Guid id) where T : AuditedEntity<Guid>
         {
             var repo = IocManager.Instance.Resolve<IRepository<T, Guid>>();
 
             return repo.Get(id);
-        }
+        }*/
 
     }
     

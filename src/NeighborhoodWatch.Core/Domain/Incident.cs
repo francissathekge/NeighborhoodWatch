@@ -11,7 +11,7 @@ namespace NeighborhoodWatch.Domain
 {
     public class Incident : FullAuditedEntity<Guid>
     {
-        public virtual DateTime CreatedDate { get; set; }
+
         public virtual StoredFile Picture { get; set; }
         public Address Address { get; set; }
         public Person Person { get; set; }

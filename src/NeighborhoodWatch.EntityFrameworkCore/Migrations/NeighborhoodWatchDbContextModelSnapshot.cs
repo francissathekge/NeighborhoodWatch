@@ -1674,6 +1674,46 @@ namespace NeighborhoodWatch.Migrations
                     b.ToTable("Addresses");
                 });
 
+            modelBuilder.Entity("NeighborhoodWatch.Domain.Forum", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("CreatorUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<long?>("DeleterUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<long?>("LastModifierUserId")
+                        .HasColumnType("bigint");
+
+                    b.Property<Guid?>("PersonId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonId");
+
+                    b.ToTable("Forums");
+                });
+
             modelBuilder.Entity("NeighborhoodWatch.Domain.Incident", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1685,9 +1725,6 @@ namespace NeighborhoodWatch.Migrations
 
                     b.Property<string>("Comment")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
@@ -1742,9 +1779,6 @@ namespace NeighborhoodWatch.Migrations
                     b.Property<decimal>("Amount")
                         .HasColumnType("decimal(18,2)");
 
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2");
-
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("datetime2");
 
@@ -1798,7 +1832,7 @@ namespace NeighborhoodWatch.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("StoredFile");
+                    b.ToTable("StoredFiles");
                 });
 
             modelBuilder.Entity("NeighborhoodWatch.MultiTenancy.Tenant", b =>
@@ -2096,6 +2130,15 @@ namespace NeighborhoodWatch.Migrations
                     b.Navigation("DeleterUser");
 
                     b.Navigation("LastModifierUser");
+                });
+
+            modelBuilder.Entity("NeighborhoodWatch.Domain.Forum", b =>
+                {
+                    b.HasOne("MovieListAbpApp.Domain.Person", "Person")
+                        .WithMany()
+                        .HasForeignKey("PersonId");
+
+                    b.Navigation("Person");
                 });
 
             modelBuilder.Entity("NeighborhoodWatch.Domain.Incident", b =>

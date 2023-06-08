@@ -23,15 +23,15 @@ namespace NeighborhoodWatch.Services.PatrollingRequestService.Mapping
                 .ForMember(x => x.AddressId, m => m.MapFrom(x => x.Address != null ? x.Address.Id : (Guid?)null));
 
 
-            CreateMap<PatrollingRequestDto, PatrollingRequest>()
-                .ForMember(e => e.Person, d => d.MapFrom(x => GetEntity<Person>(x.PersonId)));
+   /*         CreateMap<PatrollingRequestDto, PatrollingRequest>()
+                .ForMember(e => e.Person, d => d.MapFrom(x => GetEntity<Person>(x.PersonId)));*/
         }
-        private T GetEntity<T>(Guid id) where T : AuditedEntity<Guid>
+/*        private T GetEntity<T>(Guid id) where T : AuditedEntity<Guid>
         {
             var repo = IocManager.Instance.Resolve<IRepository<T, Guid>>();
 
             return repo.Get(id);
         }
-
+*/
     }
 }
