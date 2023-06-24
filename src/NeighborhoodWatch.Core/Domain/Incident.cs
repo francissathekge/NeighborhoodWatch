@@ -13,6 +13,7 @@ namespace NeighborhoodWatch.Domain
     {
 
         public virtual StoredFile Picture { get; set; }
+        public virtual DateTime IncidentDate { get; set; }
         public Address Address { get; set; }
         public Person Person { get; set; }
         public virtual string IncidentType { get; set; }

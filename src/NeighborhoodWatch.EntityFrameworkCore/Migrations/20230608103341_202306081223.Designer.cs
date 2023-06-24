@@ -1829,7 +1829,7 @@ namespace NeighborhoodWatch.Migrations
                     b.ToTable("PatrollingRequests");
                 });
 
-            modelBuilder.Entity("NeighborhoodWatch.Domain.StoredFile", b =>
+            modelBuilder.Entity("NeighborhoodWatch.Domain.StoredImage", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -2162,7 +2162,7 @@ namespace NeighborhoodWatch.Migrations
                         .WithMany()
                         .HasForeignKey("PersonId");
 
-                    b.HasOne("NeighborhoodWatch.Domain.StoredFile", "Picture")
+                    b.HasOne("NeighborhoodWatch.Domain.StoredImage", "Picture")
                         .WithMany()
                         .HasForeignKey("PictureId");
 

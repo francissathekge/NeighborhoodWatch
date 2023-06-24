@@ -15,10 +15,12 @@ namespace NeighborhoodWatch.Services.PatrollingRequestService.Dtos
     [AutoMap(typeof(PatrollingRequest))]
     public class PatrollingRequestDto : EntityDto<Guid>
     {
-
-        public virtual decimal Amount { get; set; }
-        public virtual DateTime StartTime { get; set; }
-        public virtual DateTime EndTime { get; set; }
+        public int Period { get; set; }
+        public int NoOfGuards { get; set; }
+        public string Location { get; set; }
+        public decimal Amount { get; set; }
+        public DateTime StartTime { get; set; }
+        public DateTime EndTime { get; set; }
         public Guid AddressId { get; set; }
         public Guid PersonId { get; set; }
     }

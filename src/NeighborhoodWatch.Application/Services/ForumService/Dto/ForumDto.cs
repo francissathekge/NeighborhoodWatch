@@ -16,6 +16,7 @@ namespace NeighborhoodWatch.Services.ForumService.Dto
     {
         public Guid PersonId { get; set; }
         public string Content { get; set; }
+        public DateTime CreatedTime { get; set; }
 
     }
 }

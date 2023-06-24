@@ -29,8 +29,8 @@ namespace NeighborhoodWatch.Services.ForumService
             _forumRepository = forumRepository;
         }
         [HttpPost]
-        [Consumes("multipart/form-data")]
-        public async Task<ForumDto> CreateAsync([FromForm] ForumDto forum)
+        
+        public async Task<ForumDto> CreateAsync(ForumDto forum)
         {
             var userId = AbpSession.UserId;
             var person = await _personRepository.FirstOrDefaultAsync(a => a.User.Id == userId);
@@ -38,8 +38,10 @@ namespace NeighborhoodWatch.Services.ForumService
             var entity = ObjectMapper.Map<Forum>(forum);
             entity.Person = person;
 
-            /*            var entity = ObjectMapper.Map<Forum>(forum);
-                          entity.Person = _personRepository.Get(forum.PersonId);*/
+
+
+            //var entity = ObjectMapper.Map<Forum>(forum);
+            //entity.Person = _personRepository.Get(forum.PersonId);
 
             return ObjectMapper.Map<ForumDto>(await _forumRepository.InsertAsync(entity));
         }

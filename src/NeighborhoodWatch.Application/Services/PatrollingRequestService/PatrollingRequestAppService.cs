@@ -28,8 +28,8 @@ namespace NeighborhoodWatch.Services.PatrollingRequestService
             _addressRepository = addressRepository;
         }
         [HttpPost]
-        [Consumes("multipart/form-data")]
-        public async Task<PatrollingRequestDto> CreateAsync([FromForm] PatrollingRequestDto patrollingRequest)
+
+        public async Task<PatrollingRequestDto> CreateAsync(PatrollingRequestDto patrollingRequest)
         {
             var userId = AbpSession.UserId;
             var person = await _PersonRepository.GetAllIncluding(a => a.Address).Where(a => a.User.Id == userId).FirstOrDefaultAsync();

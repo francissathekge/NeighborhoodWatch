@@ -12,6 +12,7 @@ namespace NeighborhoodWatch.Domain
     {
         public Person Person { get; set; }
         public virtual string Content { get; set; }
+        public virtual DateTime? CreatedTime { get; set; }
 
     }
 }

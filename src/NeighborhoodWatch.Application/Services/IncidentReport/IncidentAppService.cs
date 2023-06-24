@@ -44,9 +44,9 @@ namespace NeighborhoodWatch.Services.IncidentReport
         {
             var userId = AbpSession.UserId;
             var person = await _personRepository.GetAllIncluding(a => a.Address).Where(a => a.User.Id == userId).FirstOrDefaultAsync();
-/*
-            var userId = AbpSession.UserId;
-            var person = await _personRepository.FirstOrDefaultAsync(a => a.User.Id == userId);*/
+            /*
+                        var userId = AbpSession.UserId;
+                        var person = await _personRepository.FirstOrDefaultAsync(a => a.User.Id == userId);*/
 
             var entity = ObjectMapper.Map<Incident>(incident);
             entity.Person = person;
@@ -67,6 +67,14 @@ namespace NeighborhoodWatch.Services.IncidentReport
             }
 
             return ObjectMapper.Map<IncidentDto>(await _incidentRepository.InsertAsync(entity));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetStoredFile(Guid id)
+        {
+            var service = _incidentRepository.GetAllIncluding(x => x.Picture).FirstOrDefault(y => y.Id == id);
+            var storedFileService = IocManager.Instance.Resolve<StoredFileAppService>();
+            return await storedFileService.GetStoredFile(service.Picture.Id);
         }
 
 

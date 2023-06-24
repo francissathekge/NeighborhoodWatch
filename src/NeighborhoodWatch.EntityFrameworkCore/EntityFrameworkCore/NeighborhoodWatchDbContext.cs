@@ -18,6 +18,10 @@ namespace NeighborhoodWatch.EntityFrameworkCore
         public DbSet<Incident> Incidents { get; set; }
         public DbSet<StoredFile> StoredFiles { get; set; }
         public DbSet<Forum> Forums { get; set; }
+        public DbSet<SecurityCompany> securityCompanies{ get; set; }
+        public DbSet<Donation> Donations { get; set; }
+        public DbSet<Reward> Rewards{ get; set; }
+        public DbSet<StoredImage> storedImages{ get; set; }
 
 
         public NeighborhoodWatchDbContext(DbContextOptions<NeighborhoodWatchDbContext> options)
